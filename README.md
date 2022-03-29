@@ -1,6 +1,10 @@
-# Digital Pulp - PHP Pre-commit Hooks
+# Bolovsky - PHP Pre-commit Hooks
 
 Pre-commit scripts appropriate for *any* PHP project. These hooks are made as custom plugins under the [pre-commit](http://pre-commit.com/#new-hooks) git hook framework.
+
+Original credits: https://github.com/digitalpulp/pre-commit-php
+
+Since the lib is unmaintained and I need to have php vendor as an argument, will pick this one up.
 
 # Setup
 
@@ -11,7 +15,7 @@ See (Adding pre-commit plugins to your project)[https://pre-commit.com/#adding-p
 ## php-lint
 
 ```yaml
-- repo: https://github.com/digitalpulp/pre-commit-php.git
+- repo: https://github.com/bolovsky/pre-commit-php.git
   rev: 1.4.0
   hooks:
   - id: php-lint
@@ -22,7 +26,7 @@ A bash script that runs `php -l` against stage files that are php. Assumes `php`
 ## php-lint-all
 
 ```yaml
-- repo: https://github.com/digitalpulp/pre-commit-php.git
+- repo: https://github.com/bolovsky/pre-commit-php.git
   rev: 1.4.0
   hooks:
   - id: php-lint-all
@@ -34,7 +38,7 @@ A systems hook that just runs `php -l` against stage files that have the `.php` 
 
 
 ```yaml
-- repo: https://github.com/digitalpulp/pre-commit-php.git
+- repo: https://github.com/bolovsky/pre-commit-php.git
   rev: 1.4.0
   hooks:
   - id: php-unit
@@ -50,7 +54,7 @@ Note in its current state, it will run the whole PHPUnit test as along as `.php`
 ## php-cs
 
 ```yaml
-- repo: https://github.com/digitalpulp/pre-commit-php.git
+- repo: https://github.com/bolovsky/pre-commit-php.git
   rev: 1.4.0
   hooks:
   - id: php-cs
@@ -67,7 +71,7 @@ The `args` property in your hook declaration can be used for pass any valid PHP 
 ## php-cbf
 
 ```yaml
-- repo: https://github.com/digitalpulp/pre-commit-php.git
+- repo: https://github.com/bolovsky/pre-commit-php.git
   rev: 1.4.0
   hooks:
   - id: php-cs
@@ -83,7 +87,7 @@ The `args` property in your hook declaration can be used for pass any valid PHP 
 If you have multiple standards or a comma in your `args` property, escape the comma character like so
 
 ```yaml
-- repo: https://github.com/digitalpulp/pre-commit-php.git
+- repo: https://github.com/bolovsky/pre-commit-php.git
   rev: 1.4.0
   hooks:
   - id: php-cs
@@ -95,7 +99,7 @@ To install PHP Codesniffer (phpcs & phpcbf), follow the [recommended steps here]
 
 ## php-cs-fixer
 ```yaml
--- repo: https://github.com/digitalpulp/pre-commit-php.git
+-- repo: https://github.com/bolovsky/pre-commit-php.git
    rev: 1.4.0
   hooks:
   - id: php-cs-fixer
@@ -113,7 +117,7 @@ Adds the (PHPStan)[https://phpstan.org/] tool.
 
 
 ```yaml
--- repo: https://github.com/digitalpulp/pre-commit-php.git
+-- repo: https://github.com/bolovsky/pre-commit-php.git
    rev: 1.4.0
   hooks:
   - id: php-stan
