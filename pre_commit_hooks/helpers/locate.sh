@@ -10,12 +10,6 @@ exec_command=""
 # A phar file will need to be called by php
 prefixed_local_command="php $local_command"
 
-if [[ ! $PHP_VENDOR != "" ]]; then
-    vendor_command=$(sed -e "s/vendor/${PHP_VENDOR}/g")
-
-    echo $PHP_VENDOR
-fi
-
 if [ -f "$vendor_command" ]; then
     exec_command=$vendor_command
 elif hash $global_command 2>/dev/null; then
