@@ -28,18 +28,18 @@ global_command="php-cs-fixer"
 
 # Print a welcome and locate the exec for this tool
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source $DIR/helpers/colors.sh
-source $DIR/helpers/formatters.sh
-source $DIR/helpers/welcome.sh
-source $DIR/helpers/locate.sh
+source "$DIR/helpers/colors.sh"
+source "$DIR/helpers/formatters.sh"
+source "$DIR/helpers/welcome.sh"
+source "$DIR/helpers/locate.sh"
 
 # Build our list of files, and our list of args by testing if the argument is
 # a valid path
 args=""
 files=()
-for arg in ${*}
+for arg in "$@"
 do
-    if [ -e $arg ]; then
+    if [ -e "$arg" ]; then
         files+=("$arg")
     else
         args+=" $arg"
@@ -52,8 +52,8 @@ php_errors_found=false
 error_message=""
 for path in "${files[@]}"
 do
-    ${exec_command} fix${args} ${path} 1> /dev/null
-    if [ $? -ne 0 ]; then
+    # shellcheck disable=2086
+    if ! ${exec_command} fix${args} ${path} 1> /dev/null ; then
         error_message+="  - ${txtylw}${path}${txtrst}\n"
         php_errors_found=true
     fi

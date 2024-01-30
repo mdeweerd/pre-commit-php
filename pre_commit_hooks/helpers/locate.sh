@@ -3,6 +3,8 @@
 # Locate the command from a list of options
 #
 ################################################################################
+# shellcheck shell=bash
+# shellcheck disable=2034,2154
 
 # Final location of the executable that we found by searching
 exec_command=""
@@ -12,7 +14,7 @@ prefixed_local_command="php $local_command"
 
 if [ -f "$vendor_command" ]; then
     exec_command=$vendor_command
-elif hash $global_command 2>/dev/null; then
+elif hash "$global_command" 2>/dev/null; then
     exec_command=$global_command
 elif [ -f "$local_command" ]; then
     exec_command=$prefixed_local_command

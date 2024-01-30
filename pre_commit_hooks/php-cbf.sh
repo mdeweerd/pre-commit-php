@@ -12,6 +12,7 @@
 #
 # Arguments
 # - None
+#
 
 # Plugin title
 title="PHP Code Beautifier and Fixer"
@@ -23,21 +24,22 @@ global_command="phpcbf"
 
 # Print a welcome and locate the exec for this tool
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source $DIR/helpers/colors.sh
-source $DIR/helpers/formatters.sh
-source $DIR/helpers/welcome.sh
-source $DIR/helpers/locate.sh
+source "$DIR/helpers/colors.sh"
+source "$DIR/helpers/formatters.sh"
+source "$DIR/helpers/welcome.sh"
+source "$DIR/helpers/locate.sh"
 
 # Loop through the list of paths to run PHP Code Beautifier and Fixer against
 
-phpcbf_files_to_check="${@:2}"
+phpcbf_files_to_check="${*:2}"
 phpcbf_args=$1
 # Without this escape field, the parameters would break if there was a comma in it
 phpcbf_command="${exec_command} ${phpcbf_args} ${phpcbf_files_to_check}"
 
 echo -e "${bldwht}Running command ${txtgrn} $phpcbf_command${txtrst}"
-command_result=`eval $phpcbf_command`
-if [[ $command_result =~ ERROR ]]
+# shellcheck disable=2086
+command_result=$(eval $phpcbf_command)
+if [[ "$command_result" =~ ERROR ]]
 then
     hr
     echo -en "${bldmag}Errors detected by PHP Code Beautifier and Fixer ... ${txtrst} \n"

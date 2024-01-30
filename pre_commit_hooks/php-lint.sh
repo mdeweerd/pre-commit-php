@@ -27,9 +27,9 @@ title="PHP Linter"
 
 # Print a welcome and locate the exec for this tool
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source $DIR/helpers/colors.sh
-source $DIR/helpers/formatters.sh
-source $DIR/helpers/welcome.sh
+source "$DIR/helpers/colors.sh"
+source "$DIR/helpers/formatters.sh"
+source "$DIR/helpers/welcome.sh"
 
 # Where to stop looking for file paths in the argument list
 arg_lookup_start=1
@@ -39,29 +39,29 @@ php_errors_found=false
 
 # Figure out if options were passed
 while getopts ":s:" optname
-  do
+do
     case "$optname" in
-      "s")
-        arg_lookup_start=2
-        if [ $OPTARG == $check_args_flag_first ]; then
-            check_all=false
-        elif [ $OPTARG == $check_args_flag_all ]; then
-            check_all=true
-        else
-            check_all=true
-        fi
-        ;;
+        "s")
+            arg_lookup_start=2
+            if [ "$OPTARG" == $check_args_flag_first ]; then
+                check_all=false
+            elif [ "$OPTARG" == $check_args_flag_all ]; then
+                check_all=true
+            else
+                check_all=true
+            fi
+            ;;
+        *)
     esac
-  done
+done
 
 # Loop through the list of paths to run php lint against
 parse_error_count=0
-for path in ${*:$arg_lookup_start}
+for path in "${@:$arg_lookup_start}"
 do
-    php -l "$path" 1> /dev/null
-    if [ $? -ne 0 ]; then
-#        echo "PHP Parse errors were detected" >&2
-        parse_error_count=$[$parse_error_count +1]
+    if ! php -l "$path" 1> /dev/null ; then
+        #        echo "PHP Parse errors were detected" >&2
+        parse_error_count=$((parse_error_count +1))
         php_errors_found=true
         if [ "$check_all" = false ]; then
             hr

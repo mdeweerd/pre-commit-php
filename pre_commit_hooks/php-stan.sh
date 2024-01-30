@@ -26,19 +26,20 @@ global_command="phpstan"
 
 # Print a welcome and locate the exec for this tool
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source $DIR/helpers/colors.sh
-source $DIR/helpers/formatters.sh
-source $DIR/helpers/welcome.sh
-source $DIR/helpers/locate.sh
+source "$DIR/helpers/colors.sh"
+source "$DIR/helpers/formatters.sh"
+source "$DIR/helpers/welcome.sh"
+source "$DIR/helpers/locate.sh"
 
-command_files_to_check="${@:2}"
+command_files_to_check="${*:2}"
 command_args=$1
 command_to_run="${exec_command} analyse --no-progress ${command_args} ${command_files_to_check}"
 
 echo -e "${bldwht}Running command ${txtgrn} ${exec_command} analyse ${command_args} ${txtrst}"
 hr
-command_result=`eval $command_to_run`
-if [[ $command_result =~ ERROR ]]
+# shellcheck disable=2086
+command_result=$(eval $command_to_run)
+if [[ "$command_result" =~ ERROR ]]
 then
     hr
     echo -en "${bldmag}Errors detected by ${title}... ${txtrst} \n"

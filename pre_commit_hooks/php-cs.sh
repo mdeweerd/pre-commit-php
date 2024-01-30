@@ -23,18 +23,19 @@ global_command="phpcs"
 
 # Print a welcome and locate the exec for this tool
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source $DIR/helpers/colors.sh
-source $DIR/helpers/formatters.sh
-source $DIR/helpers/welcome.sh
-source $DIR/helpers/locate.sh
+source "$DIR/helpers/colors.sh"
+source "$DIR/helpers/formatters.sh"
+source "$DIR/helpers/welcome.sh"
+source "$DIR/helpers/locate.sh"
 
-phpcs_files_to_check="${@:2}"
+phpcs_files_to_check="${*:2}"
 phpcs_args=$1
 phpcs_command="${exec_command} ${phpcs_args} ${phpcs_files_to_check}"
 
 echo -e "${bldwht}Running command ${txtgrn}$phpcs_command${txtrst}"
-command_result=`eval $phpcs_command`
-if [[ $command_result =~ ERROR ]]
+# shellcheck disable=2086
+command_result=$(eval $phpcs_command)
+if [[ "$command_result" =~ ERROR ]]
 then
     hr
     echo -en "${bldmag}Errors detected by PHP CodeSniffer ... ${txtrst} \n"

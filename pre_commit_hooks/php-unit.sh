@@ -21,14 +21,15 @@ global_command="phpunit"
 
 # Print a welcome and locate the exec for this tool
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source $DIR/helpers/colors.sh
-source $DIR/helpers/formatters.sh
-source $DIR/helpers/welcome.sh
-source $DIR/helpers/locate.sh
+source "$DIR/helpers/colors.sh"
+source "$DIR/helpers/formatters.sh"
+source "$DIR/helpers/welcome.sh"
+source "$DIR/helpers/locate.sh"
 
 echo -e "${bldwht}Running command ${txtgrn} ${exec_command}"
-command_result=`eval $exec_command`
-if [[ $command_result =~ FAILURES ]]
+# shellcheck disable=2086
+command_result=$(eval $exec_command)
+if [[ "$command_result" =~ FAILURES ]]
 then
     hr
     echo "Failures detected in unit tests..."

@@ -3,6 +3,8 @@
 # Terminal Colors
 #
 ################################################################################
+# shellcheck shell=bash
+# shellcheck disable=2034
 
 # Regular
 txtblk='\033[0;30m' # Black
