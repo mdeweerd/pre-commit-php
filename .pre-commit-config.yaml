@@ -77,4 +77,4 @@ repos:
     rev: v0.9.0.6
     hooks:
       - id: shellcheck
-        args: [-W, '100', -P, 'pre_commit_hooks']
+        args: [-W, '100', -x, -P, './pre_commit_hooks']

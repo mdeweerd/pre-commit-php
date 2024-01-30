@@ -33,9 +33,12 @@ phpcs_args=$1
 phpcs_command="${exec_command} ${phpcs_args} ${phpcs_files_to_check}"
 
 echo -e "${bldwht}Running command ${txtgrn}$phpcs_command${txtrst}"
-# shellcheck disable=2086
-command_result=$(eval $phpcs_command)
-if [[ "$command_result" =~ ERROR ]]
+
+command_result="$($SHELL -c "(eval '$phpcs_command') 2>&1 ; exit \$?")"
+exitCode=$?
+
+# exit codes: 1=error, 2=warning, others=?
+if [[ "$exitCode" != 2 ]]
 then
     hr
     echo -en "${bldmag}Errors detected by PHP CodeSniffer ... ${txtrst} \n"
