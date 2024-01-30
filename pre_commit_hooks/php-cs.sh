@@ -37,14 +37,17 @@ echo -e "${bldwht}Running command ${txtgrn}$phpcs_command${txtrst}"
 command_result="$($SHELL -c "(eval '$phpcs_command') 2>&1 ; exit \$?")"
 exitCode=$?
 
-# exit codes: 1=error, 2=warning, others=?
-if [[ "$exitCode" != 2 ]]
+# exit codes: 0=ok, 1=warning, 2=error, others=?
+if [[ "$exitCode" -gt 1 ]]
 then
     hr
     echo -en "${bldmag}Errors detected by PHP CodeSniffer ... ${txtrst} \n"
     hr
-    echo "$command_result"
-    exit 1
+else
+    hr
+    echo -en "${bldmag}No Errors detected by PHP CodeSniffer ... ${txtrst} \n"
+    hr
 fi
 
-exit 0
+echo "$command_result"
+exit $exitCode
