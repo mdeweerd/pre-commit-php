@@ -45,8 +45,9 @@ then
     hr
 else
     hr
-    echo -en "${bldmag}No Errors detected by PHP CodeSniffer ... ${txtrst} \n"
+    echo -en "${bldmag}No Errors detected by PHP CodeSniffer ... ${txtrst} (exit code:$exitCode)\n"
     hr
+    exitCode=0
 fi
 
 echo "$command_result"
