@@ -20,6 +20,27 @@
   language: script
   files: \.php$
 
+- id: php-pest
+  name: PestPHP
+  description: Run the full php unit test with PestPHP.
+  entry: pre_commit_hooks/php-pest.sh
+  language: script
+  files: \.php$
+
+- id: php-pest-coverage
+  name: PestPHP Coverage
+  description: Run the full php unit test with PestPHP with coverage.
+  entry: pre_commit_hooks/php-pest-coverage.sh
+  language: script
+  files: \.php$
+
+- id: php-stan
+  name: PHPStan
+  description: Check for bugs in your code using PHPStan.
+  entry: pre_commit_hooks/php-stan.sh
+  language: script
+  files: \.php$
+
 - id: php-cs
   name: PHP Codesniffer
   description: Run php codesniffer against all staged files.
@@ -38,5 +59,12 @@
   name: PHP Coding Standards Fixer
   description: Run php coding standards fixer against all staged files.
   entry: pre_commit_hooks/php-cs-fixer.sh
+  language: script
+  files: \.php$
+
+- id: laravel-pint
+  name: PHP Coding Standards Fixer
+  description: Run php coding standards fixer against all staged files.
+  entry: pre_commit_hooks/laravel-pint.sh
   language: script
   files: \.php$
