@@ -26,13 +26,17 @@
   entry: pre_commit_hooks/php-pest.sh
   language: script
   files: \.php$
+  args: [--parallel]
+  always_run: true
 
 - id: php-pest-coverage
   name: PestPHP Coverage
   description: Run the full php unit test with PestPHP with coverage.
-  entry: pre_commit_hooks/php-pest-coverage.sh
+  entry: pre_commit_hooks/php-pest.sh
   language: script
   files: \.php$
+  args: [--parallel --coverage --min=100]
+  always_run: true
 
 - id: php-stan
   name: PHPStan
@@ -40,6 +44,7 @@
   entry: pre_commit_hooks/php-stan.sh
   language: script
   files: \.php$
+  always_run: true
 
 - id: php-cs
   name: PHP Codesniffer
@@ -68,3 +73,4 @@
   entry: pre_commit_hooks/laravel-pint.sh
   language: script
   files: \.php$
+  always_run: true
