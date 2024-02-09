@@ -25,6 +25,7 @@ repos:
     rev: v6.2.1
     hooks:
       - id: beautysh
+        additional_dependencies: [setuptools]
 
   # Run local script
   - repo: local
