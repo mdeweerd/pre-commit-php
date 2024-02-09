@@ -25,7 +25,7 @@
   description: Run the full php unit test with PestPHP.
   entry: pre_commit_hooks/php-pest.sh
   language: script
-  files: \.php$
+  pass_filenames: false
   args: [--parallel]
   always_run: true
 
@@ -34,7 +34,7 @@
   description: Run the full php unit test with PestPHP with coverage.
   entry: pre_commit_hooks/php-pest.sh
   language: script
-  files: \.php$
+  pass_filenames: false
   args: [--parallel --coverage --min=100]
   always_run: true
 
