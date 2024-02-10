@@ -11,6 +11,12 @@ jobs:
       CS_XML: pre-commit.xml
     steps:
       - uses: actions/checkout@v4
+      - name: Setup PHP tools (for tests)
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.1
+          coverage: none # disable xdebug, pcov
+          tools: phpcs,phpcbf,phpunit,phpstan,php-cs-fixer,phplint
       # Action setup-python needs a requirements.txt or pyproject.toml
       # This ensures one of them exists.
       - name: Create requirements.txt if no requirements.txt or pyproject.toml
@@ -31,6 +37,7 @@ jobs:
           set -o pipefail
           pre-commit gc
           pre-commit run --show-diff-on-failure --color=always --all-files | tee ${RAW_LOG}
+          pre-commit run -a --hook-stage manual tests | tee -a ${RAW_LOG}
       - name: Convert Raw Log to Checkstyle format (launch action)
         uses: mdeweerd/logToCheckStyle@v2024.2.3
         if: ${{ failure() }}

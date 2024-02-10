@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S bash
 
 # Bash PHP Linter for Pre-commits
 #
@@ -59,8 +59,12 @@ done
 parse_error_count=0
 for path in "${@:$arg_lookup_start}"
 do
-    if ! php -l "$path" 1> /dev/null ; then
-        #        echo "PHP Parse errors were detected" >&2
+    command_result="$($SHELL -c "(eval 'php -l \"${path}\"') 2>&1 ; exit \$?")"
+    exitCode=$?
+
+    if [ $exitCode != 0 ] ; then
+        # echo "PHP Parse errors were detected" >&2
+        echo "$command_result"
         parse_error_count=$((parse_error_count +1))
         php_errors_found=true
         if [ "$check_all" = false ]; then
@@ -74,7 +78,7 @@ done;
 
 if [ "$php_errors_found" = true ]; then
     hr
-    echo -en "${bldmag}$parse_error_count${txtrst} ${txtylw}PHP Parse error(s) were found!${txtrst} \n"
+    echo -en "${bldmag}$parse_error_count${txtrst} ${txtylw}PHP Parse error(s) were found!${txtrst}\n"
     hr
     exit 1
 fi

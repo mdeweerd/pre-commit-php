@@ -15,7 +15,7 @@ See (Adding pre-commit plugins to your project)[https://pre-commit.com/#adding-p
 ## php-lint
 
 ```yaml
-- repo: https://github.com/bolovsky/pre-commit-php.git
+- repo: https://github.com/mdeweerd/pre-commit-php.git
   rev: 1.4.0
   hooks:
   - id: php-lint
@@ -26,7 +26,7 @@ A bash script that runs `php -l` against stage files that are php. Assumes `php`
 ## php-lint-all
 
 ```yaml
-- repo: https://github.com/bolovsky/pre-commit-php.git
+- repo: https://github.com/mdeweerd/pre-commit-php.git
   rev: 1.4.0
   hooks:
   - id: php-lint-all
@@ -38,23 +38,37 @@ A systems hook that just runs `php -l` against stage files that have the `.php` 
 
 
 ```yaml
-- repo: https://github.com/bolovsky/pre-commit-php.git
+- repo: https://github.com/mdeweerd/pre-commit-php.git
   rev: 1.4.0
   hooks:
   - id: php-unit
 ```
 
-A bash script that will run the appropriate phpunit executable. It will assume
+A bash script that will run the appropriate phpunit executable. It will assume to:
 
   - Find the executable to run at either `vendor/bin/phpunit`, `phpunit` or `php phpunit.phar` (in that exact order).
-  - There is already a `phpunit.xml` in the root of the repo
+  - There is already an optional `phpunit.xml` in the root of the repo
 
-Note in its current state, it will run the whole PHPUnit test as along as `.php` file was committed.
+By default the hook filters on files that end in ...Test.php .
+
+
+To run all tests (optionally in a path):
+
+```yaml
+- repo: https://github.com/mdeweerd/pre-commit-php.git
+  rev: 1.4.0
+  hooks:
+  - id: php-unit
+    pass_filenames: false
+    # args: [ path/to/tests ]
+```
+
+You can pass other arguments as well.
 
 ## php-cs
 
 ```yaml
-- repo: https://github.com/bolovsky/pre-commit-php.git
+- repo: https://github.com/mdeweerd/pre-commit-php.git
   rev: 1.4.0
   hooks:
   - id: php-cs
@@ -71,7 +85,7 @@ The `args` property in your hook declaration can be used for pass any valid PHP 
 ## php-cbf
 
 ```yaml
-- repo: https://github.com/bolovsky/pre-commit-php.git
+- repo: https://github.com/mdeweerd/pre-commit-php.git
   rev: 1.4.0
   hooks:
   - id: php-cs
@@ -87,7 +101,7 @@ The `args` property in your hook declaration can be used for pass any valid PHP 
 If you have multiple standards or a comma in your `args` property, escape the comma character like so
 
 ```yaml
-- repo: https://github.com/bolovsky/pre-commit-php.git
+- repo: https://github.com/mdeweerd/pre-commit-php.git
   rev: 1.4.0
   hooks:
   - id: php-cs
@@ -99,7 +113,7 @@ To install PHP Codesniffer (phpcs & phpcbf), follow the [recommended steps here]
 
 ## php-cs-fixer
 ```yaml
--- repo: https://github.com/bolovsky/pre-commit-php.git
+-- repo: https://github.com/mdeweerd/pre-commit-php.git
    rev: 1.4.0
   hooks:
   - id: php-cs-fixer
@@ -117,7 +131,7 @@ Adds the (PHPStan)[https://phpstan.org/] tool.
 
 
 ```yaml
--- repo: https://github.com/bolovsky/pre-commit-php.git
+-- repo: https://github.com/mdeweerd/pre-commit-php.git
    rev: 1.4.0
   hooks:
   - id: php-stan

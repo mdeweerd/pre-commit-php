@@ -29,23 +29,17 @@ source "$DIR/helpers/formatters.sh"
 source "$DIR/helpers/welcome.sh"
 source "$DIR/helpers/locate.sh"
 
-# Loop through the list of paths to run PHP Code Beautifier and Fixer against
+echo -e "${bldwht}Running command ${txtgrn}${exec_command} $(for i in "$@";do echo "'$i'";done)${txtrst}"
 
-phpcbf_files_to_check="${*:2}"
-phpcbf_args=$1
-# Without this escape field, the parameters would break if there was a comma in it
-phpcbf_command="${exec_command} ${phpcbf_args} ${phpcbf_files_to_check}"
+command_result="$($SHELL -c "(cd '$PWD' ; eval '\"${exec_command}\" \"\${@}\"' ) 2>&1 ; exit \$?" -- "$@")"
+exitCode=$?
 
-echo -e "${bldwht}Running command ${txtgrn} $phpcbf_command${txtrst}"
-# shellcheck disable=2086
-command_result=$(eval $phpcbf_command)
-if [[ "$command_result" =~ ERROR ]]
+if [[ "$exitCode" -ge 1 ]]
 then
     hr
     echo -en "${bldmag}Errors detected by PHP Code Beautifier and Fixer ... ${txtrst} \n"
     hr
     echo "$command_result"
-    exit 1
 fi
 
-exit 0
+exit $exitCode

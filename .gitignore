@@ -5,3 +5,5 @@
 # IntelliJ / PhpStorm
 .idea
 */.phpstorm.meta.php
+
+bash_unit

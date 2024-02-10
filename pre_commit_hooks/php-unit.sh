@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S bash
 
 # Bash PHP Unit Task Runner
 #
@@ -26,15 +26,23 @@ source "$DIR/helpers/formatters.sh"
 source "$DIR/helpers/welcome.sh"
 source "$DIR/helpers/locate.sh"
 
-echo -e "${bldwht}Running command ${txtgrn} ${exec_command}"
-# shellcheck disable=2086
-command_result=$(eval $exec_command)
-if [[ "$command_result" =~ FAILURES ]]
+echo -e "${bldwht}Running command ${txtgrn}${exec_command}${txtrst}"
+
+if [ 0 == ${#@} ] ; then
+    command_result="$($SHELL -c "(cd '$PWD' ; eval '${exec_command}' \"\${@}\" ) 2>&1 ; exit \$?" -- . "$@")"
+    exitCode=$?
+else
+    command_result="$($SHELL -c "(eval '\"${exec_command}\" \"\${@}\"' ) 2>&1 ; exit \$?" -- "$@")"
+    exitCode=$?
+fi
+
+
+if [[ "$exitCode" != 0 ]]
 then
     hr
     echo "Failures detected in unit tests..."
     hr
     echo "$command_result"
-    exit 1
+    exit $exitCode
 fi
 exit 0

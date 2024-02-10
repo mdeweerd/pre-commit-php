@@ -20,6 +20,7 @@
     first and then runs it. Preference order is vendor/bin, phpunit and phpunit.phar.
   entry: pre_commit_hooks/php-unit.sh
   language: script
+  files: .*Test.php
   types: [php]
 - id: php-cs
   name: PHP Codesniffer

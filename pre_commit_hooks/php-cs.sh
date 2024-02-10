@@ -28,17 +28,13 @@ source "$DIR/helpers/formatters.sh"
 source "$DIR/helpers/welcome.sh"
 source "$DIR/helpers/locate.sh"
 
-phpcs_files_to_check="${*:2}"
-phpcs_args=$1
-phpcs_command="${exec_command} ${phpcs_args} ${phpcs_files_to_check}"
+echo -e "${bldwht}Running command ${txtgrn}${exec_command} $(for i in "$@";do echo "'$i'";done)${txtrst}"
 
-echo -e "${bldwht}Running command ${txtgrn}$phpcs_command${txtrst}"
-
-command_result="$($SHELL -c "(eval '$phpcs_command') 2>&1 ; exit \$?")"
+command_result="$($SHELL -c "(cd '$PWD' ; eval '\"${exec_command}\" \"\${@}\"' ) 2>&1 ; exit \$?" -- "$@")"
 exitCode=$?
 
 # exit codes: 0=ok, 1=warning, 2=error, others=?
-if [[ "$exitCode" -gt 1 ]]
+if [[ "$exitCode" -ge 1 ]]
 then
     hr
     echo -en "${bldmag}Errors detected by PHP CodeSniffer ... ${txtrst} \n"

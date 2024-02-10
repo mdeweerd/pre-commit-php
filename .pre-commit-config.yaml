@@ -27,15 +27,6 @@ repos:
       - id: beautysh
         additional_dependencies: [setuptools]
 
-  # Run local script
-  - repo: local
-    hooks:
-      - id: local-precommit-script
-        name: Run local script before commit if it exists
-        language: system
-        entry: bash -c '[ ! -x local.sh ] || ./local.sh'
-        pass_filenames: false
-
   # Prettier (format code, only for non common files)
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v3.0.3
@@ -65,13 +56,6 @@ repos:
       - id: codespell
         exclude_types: [image]
         additional_dependencies: [tomli]
-      - alias: codespell-lang-en_US
-        # Only for translations with specialised exceptions
-        # -D contains predefined conversion dictionaries
-        # -L is to ignore some words
-        id: codespell
-        files: ^htdocs/langs/en_US/.*$
-        args: [--builtin, 'clear,rare,informal,usage,code,names', -q, '2']
 
   # Check some shell scripts
   - repo: https://github.com/shellcheck-py/shellcheck-py
@@ -79,3 +63,15 @@ repos:
     hooks:
       - id: shellcheck
         args: [-W, '100', -x, -P, './pre_commit_hooks']
+
+
+  # Run tests
+  - repo: local
+    hooks:
+      - id: tests
+        stages: [manual]
+        name: Run tests
+        language: system
+        entry: ./run-tests.sh
+        always_run: true
+        pass_filenames: false

@@ -31,14 +31,12 @@ source "$DIR/helpers/formatters.sh"
 source "$DIR/helpers/welcome.sh"
 source "$DIR/helpers/locate.sh"
 
-command_files_to_check="${*:2}"
-command_args=$1
-command_to_run="${exec_command} analyse --no-progress ${command_args} ${command_files_to_check}"
-
-echo -e "${bldwht}Running command ${txtgrn} ${exec_command} analyse ${command_args} ${txtrst}"
+echo -e "${bldwht}Running command ${txtgrn}${exec_command} analyze $(for i in "$@";do echo "'$i'";done)${txtrst}"
 hr
-# shellcheck disable=2086
-command_result=$(eval $command_to_run)
+
+command_result="$($SHELL -c "(cd '$PWD' ; eval '\"${exec_command}\" analyse --no-progress \"\${@}\"' ) 2>&1 ; exit \$?" -- "$@")"
+#exitCode=$?
+
 if [[ "$command_result" =~ ERROR ]]
 then
     hr

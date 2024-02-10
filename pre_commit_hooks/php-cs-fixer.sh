@@ -42,19 +42,23 @@ do
     if [ -e "$arg" ]; then
         files+=("$arg")
     else
-        args+=" $arg"
+        args+=" '$arg'"
     fi
 done;
 
+exec_command="'${exec_command}' fix${args}"
+
 # Run the command on each file
-echo -e "${txtgrn}  $exec_command fix${args}${txtrst}"
+echo -e "${txtgrn}  ${exec_command}${txtrst}"
 php_errors_found=false
 error_message=""
 for path in "${files[@]}"
 do
-    # shellcheck disable=2086
-    if ! ${exec_command} fix${args} ${path} 1> /dev/null ; then
-        error_message+="  - ${txtylw}${path}${txtrst}\n"
+    command_result="$($SHELL -c "(eval ${exec_command} '${path}') 2>&1 ; exit \$?")"
+    exitCode=$?
+    if [ "${exitCode}" != 0 ] ; then
+        error_message+="  - ${txtylw}${path}${txtrst} (exitCode:${exitCode})\n"
+        echo "$command_result"
         php_errors_found=true
     fi
 done;
