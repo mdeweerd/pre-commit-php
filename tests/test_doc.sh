@@ -6,7 +6,8 @@ OUTPUT_PATTERN='```output'
 LANG=C.UTF-8
 TEST_DOC_BN=TEST.md
 
-IGNORE_REGEX="(Sebastian Bergmann|tests.in.|[tT]ime|q{30}|-{20}|^[\r]?$)"
+# Ignore these line in the reports, they vary across platforms
+IGNORE_REGEX="(Sebastian|tests.in.|[tT]ime|q{30}|-{20}|^[\r]?$)"
 
 # Function to recursively search upwards for file
 _find_file() {
@@ -22,17 +23,17 @@ _find_file() {
     return 1
 }
 
-TEST_DOC=$(_find_file "$(dirname "$(realpath "$0")")" ${TEST_DOC_BN})
-# shellcheck disable=2181 # Use 'if ! mycmd;'
-if [ $? != 0 ] ; then
-    TEST_DOC=$(_find_file "$(dirname "$(realpath "${BASH_SOURCE[0]}")")" ${TEST_DOC_BN})
-fi
-
 B_U=$(_find_file "$(dirname "$(realpath "$0")")" bash_unit)
 # shellcheck disable=2089
 BASH_UNIT="eval FORCE_COLOR=false \"$B_U\""
 
-WORK_DIR=$(dirname "$(_find_file "$(dirname "$(realpath "$0")")" pre_commit_hooks/php_lint.sh)")
+TEST_DOC=$(_find_file "$(dirname "$(realpath "${BASH_SOURCE[0]}")")" ${TEST_DOC_BN})
+# shellcheck disable=2181 # Use 'if ! mycmd;'
+if [ $? != 0 ] ; then
+    TEST_DOC=$(_find_file "$(dirname "$(realpath "$0")")" ${TEST_DOC_BN})
+fi
+
+WORK_DIR=$(dirname "$(dirname "$(_find_file "$(dirname "$(realpath "${BASH_SOURCE[0]}")")" pre_commit_hooks/php-lint.sh)")")/tests
 
 export STICK_TO_CWD=true
 
