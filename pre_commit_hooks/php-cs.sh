@@ -28,13 +28,14 @@ source "$DIR/helpers/formatters.sh"
 source "$DIR/helpers/welcome.sh"
 source "$DIR/helpers/locate.sh"
 
-echo -e "${bldwht}Running command ${txtgrn}${exec_command} $(for i in "$@";do echo "'$i'";done)${txtrst}"
+echo -e "${bldwht}Running command ${txtgrn}${exec_command} $(for i in "$@";do echo -n "'$i' ";done)${txtrst}"
 
 command_result="$($SHELL -c "(cd '$PWD' ; eval '\"${exec_command}\" \"\${@}\"' ) 2>&1 ; exit \$?" -- "$@")"
 exitCode=$?
-
-# exit codes: 0=ok, 1=warning, 2=error, others=?
-if [[ "$exitCode" -ge 1 ]]
+echo "$command_result"
+# exit codes: 0=ok, >0=NOK
+# shellcheck disable=2049
+if [[ "$exitCode" -ge 0 ]] && [[ ! "$command_result" =~ *" 0 ERROR"* ]]
 then
     hr
     echo -en "${bldmag}Errors detected by PHP CodeSniffer ... ${txtrst} \n"
