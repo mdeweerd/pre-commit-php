@@ -32,7 +32,7 @@ echo -e "${bldwht}Running command ${txtgrn}${exec_command} $(for i in "$@";do ec
 
 command_result="$($SHELL -c "(cd '$PWD' ; eval '\"${exec_command}\" \"\${@}\"' ) 2>&1 ; exit \$?" -- "$@")"
 exitCode=$?
-echo "$command_result"
+
 # exit codes: 0=ok, >0=NOK
 # shellcheck disable=2049
 if [[ "$exitCode" -ge 0 ]] && [[ ! "$command_result" =~ *" 0 ERROR"* ]]
