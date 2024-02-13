@@ -12,8 +12,6 @@
 [1;32mBegin PHP Codesniffer[0m 
 [1;37mRunning command [0;32mphpcs 'in/test.php'[0m
 [1;35mErrors detected by PHP CodeSniffer ... [0m 
-FOUND 1 ERROR AFFECTING 1 LINE
- 2 | ERROR | Missing file doc comment
 ```
 
 ### Test file with space
@@ -28,6 +26,23 @@ FOUND 1 ERROR AFFECTING 1 LINE
 [1;35mErrors detected by PHP CodeSniffer ... [0m 
 FOUND 1 ERROR AFFECTING 1 LINE
  2 | ERROR | Missing file doc comment
+```
+
+### Test file with space
+
+```test
+../pre_commit_hooks/php-cs.sh 'in/test_error2.php'
+```
+
+```output
+[1;32mBegin PHP Codesniffer[0m 
+[1;37mRunning command [0;32mphpcs 'in/test_error2.php'[0m
+[1;35mErrors detected by PHP CodeSniffer ... [0m 
+FOUND 4 ERRORS AFFECTING 4 LINES
+ 2 | ERROR | Missing file doc comment
+ 5 | ERROR | Missing doc comment for class TestError2
+ 7 | ERROR | Private member variable "var" must be prefixed with an underscore
+ 8 | ERROR | Missing doc comment for function getKeys()
 ```
 
 

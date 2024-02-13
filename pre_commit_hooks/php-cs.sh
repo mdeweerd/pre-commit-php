@@ -33,8 +33,9 @@ echo -e "${bldwht}Running command ${txtgrn}${exec_command} $(for i in "$@";do ec
 command_result="$($SHELL -c "(cd '$PWD' ; eval '\"${exec_command}\" \"\${@}\"' ) 2>&1 ; exit \$?" -- "$@")"
 exitCode=$?
 
-# exit codes: 0=ok, 1=warning, 2=error, others=?
-if [[ "$exitCode" -ge 1 ]]
+# exit codes: 0=ok, >0=NOK
+# shellcheck disable=2049
+if [[ "$exitCode" -ge 0 ]] && [[ ! "$1" =~ *" 0 ERROR"* ]]
 then
     hr
     echo -en "${bldmag}Errors detected by PHP CodeSniffer ... ${txtrst} \n"
