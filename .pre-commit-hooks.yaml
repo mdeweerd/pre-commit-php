@@ -10,7 +10,7 @@
 - id: php-lint
   name: PHP Syntax Check (Quick)
   description: Runs php -l on all staged PHP files. Exits when it hits the first
-    errored file. Supports PHP runtime arguments like -d memory_limit=512M.
+    errored file. Supports --memory_limit argument for setting PHP memory limit.
   entry: pre_commit_hooks/php-lint.sh
   language: script
   types: [php]
@@ -18,7 +18,7 @@
   name: PHP Unit
   description: Run the full php unit test. Checks which PHPUnit executable is available
     first and then runs it. Preference order is vendor/bin, phpunit and phpunit.phar.
-    Supports PHP runtime arguments like -d memory_limit=512M.
+    Supports --memory_limit argument for setting PHP memory limit.
   entry: pre_commit_hooks/php-unit.sh
   language: script
   files: .*Test.php
@@ -26,28 +26,28 @@
 - id: php-cs
   name: PHP Codesniffer
   description: Run php codesniffer against all staged PHP files.
-    Supports PHP runtime arguments like -d memory_limit=512M.
+    Supports --memory_limit argument for setting PHP memory limit.
   entry: pre_commit_hooks/php-cs.sh
   language: script
   types: [php]
 - id: php-cbf
   name: PHP Codesniffer (Code Beautifier and Formatter)
   description: Run php codesniffer against all staged PHP files.
-    Supports PHP runtime arguments like -d memory_limit=512M.
+    Supports --memory_limit argument for setting PHP memory limit.
   entry: pre_commit_hooks/php-cbf.sh
   language: script
   types: [php]
 - id: php-cs-fixer
   name: PHP Coding Standards Fixer
   description: Run php coding standards fixer against all staged PHP files.
-    Supports PHP runtime arguments like -d memory_limit=512M.
+    Supports --memory_limit argument for setting PHP memory limit.
   entry: pre_commit_hooks/php-cs-fixer.sh
   language: script
   types: [php]
 - id: php-stan
   name: PHPStan
   description: Run PHPStan against all staged PHP files.
-    Supports PHP runtime arguments like -d memory_limit=512M.
+    Supports --memory_limit argument for setting PHP memory limit.
   entry: pre_commit_hooks/php-stan.sh
   language: script
   types: [php]

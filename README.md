@@ -1,6 +1,6 @@
 # Bolovsky - PHP Pre-commit Hooks
 
-Pre-commit scripts appropriate for *any* PHP project. These hooks are made as custom plugins under the [pre-commit](http://pre-commit.com/#new-hooks) git hook framework.
+Pre-commit scripts appropriate for *any* PHP project. These hooks are made as custom plugins under the [pre-commit](http://pre-commit.com/#adding-pre-commit-plugins-to-your-project) git hook framework.
 
 Original credits: https://github.com/digitalpulp/pre-commit-php
 
@@ -25,15 +25,17 @@ A bash script that runs `php -l` against stage files that are php. Assumes `php`
 
 ### PHP Runtime Configuration
 
-You can pass PHP runtime arguments to control PHP behavior. For example, to set the memory limit:
+You can configure PHP runtime settings using protected arguments:
 
 ```yaml
 - repo: https://github.com/mdeweerd/pre-commit-php.git
   rev: 1.4.0
   hooks:
   - id: php-lint
-    args: [-d, memory_limit=512M]
+    args: [--memory_limit=512M]
 ```
+
+The `--memory_limit` argument accepts values like `512M`, `1G`, `1024K` (digits followed by optional K, M, or G).
 
 ## php-lint-all
 
@@ -48,14 +50,14 @@ A systems hook that just runs `php -l` against stage files that have the `.php` 
 
 ### PHP Runtime Configuration
 
-You can pass PHP runtime arguments to control PHP behavior. For example, to set the memory limit:
+You can configure PHP runtime settings using protected arguments:
 
 ```yaml
 - repo: https://github.com/mdeweerd/pre-commit-php.git
   rev: 1.4.0
   hooks:
   - id: php-lint-all
-    args: [-d, memory_limit=512M, -s, all]
+    args: [--memory_limit=512M, -s, all]
 ```
 
 ## php-unit
@@ -91,14 +93,14 @@ You can pass other arguments as well.
 
 ### PHP Runtime Configuration
 
-You can pass PHP runtime arguments to control PHP behavior. For example, to set the memory limit:
+You can configure PHP runtime settings using protected arguments:
 
 ```yaml
 - repo: https://github.com/mdeweerd/pre-commit-php.git
   rev: 1.4.0
   hooks:
   - id: php-unit
-    args: [-d, memory_limit=512M]
+    args: [--memory_limit=512M]
 ```
 
 ## php-cs
@@ -120,7 +122,7 @@ The `args` property in your hook declaration can be used for pass any valid PHP 
 
 ### PHP Runtime Configuration
 
-You can pass PHP runtime arguments to control PHP behavior. For example, to set the memory limit:
+You can configure PHP runtime settings using protected arguments:
 
 ```yaml
 - repo: https://github.com/mdeweerd/pre-commit-php.git
@@ -128,7 +130,7 @@ You can pass PHP runtime arguments to control PHP behavior. For example, to set 
   hooks:
   - id: php-cs
     files: \.(php)$
-    args: [-d, memory_limit=512M, --standard=PSR1, -p]
+    args: [--memory_limit=512M, --standard=PSR1, -p]
 ```
 
 ## php-cbf
@@ -160,7 +162,7 @@ If you have multiple standards or a comma in your `args` property, escape the co
 
 ### PHP Runtime Configuration
 
-You can pass PHP runtime arguments to control PHP behavior. For example, to set the memory limit:
+You can configure PHP runtime settings using protected arguments:
 
 ```yaml
 - repo: https://github.com/mdeweerd/pre-commit-php.git
@@ -168,7 +170,7 @@ You can pass PHP runtime arguments to control PHP behavior. For example, to set 
   hooks:
   - id: php-cbf
     files: \.(php)$
-    args: [-d, memory_limit=512M, --standard=PSR1, -p]
+    args: [--memory_limit=512M, --standard=PSR1, -p]
 ```
 
 To install PHP Codesniffer (phpcs & phpcbf), follow the [recommended steps here](https://github.com/squizlabs/PHP_CodeSniffer#installation).
@@ -188,7 +190,7 @@ The tool will fail a build when it has made changes to the staged files. This al
 
 ### PHP Runtime Configuration
 
-You can pass PHP runtime arguments to control PHP behavior. For example, to set the memory limit:
+You can configure PHP runtime settings using protected arguments:
 
 ```yaml
 - repo: https://github.com/mdeweerd/pre-commit-php.git
@@ -196,7 +198,7 @@ You can pass PHP runtime arguments to control PHP behavior. For example, to set 
   hooks:
   - id: php-cs-fixer
     files: \.(php)$
-    args: [-d, memory_limit=512M, --level=PSR2]
+    args: [--memory_limit=512M, --level=PSR2]
 ```
 
 ## php-stan
@@ -217,7 +219,7 @@ An `args` property in your hook declaration can be used for pass any valid PHPSt
 
 ### PHP Runtime Configuration
 
-You can pass PHP runtime arguments to control PHP behavior. For example, to set the memory limit:
+You can configure PHP runtime settings using protected arguments:
 
 ```yaml
 - repo: https://github.com/mdeweerd/pre-commit-php.git
@@ -225,5 +227,5 @@ You can pass PHP runtime arguments to control PHP behavior. For example, to set 
   hooks:
   - id: php-stan
     files: \.(php)$
-    args: [-d, memory_limit=512M]
+    args: [--memory_limit=512M]
 ```
