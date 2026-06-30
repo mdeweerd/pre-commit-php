@@ -13,8 +13,10 @@
 #      all   : Default. Will check ALL given files until there isn't anymore
 #      first : Will stop checking when it encounters the first file that has an error
 #
+# - PHP runtime arguments (like -d memory_limit=512M) can be passed before other arguments
+#
 #      Example
-#      -s first
+#      -d memory_limit=512M -s first
 #      -s all
 
 # Check Flags - denotes if we should check all files or stop at the first error file
@@ -30,6 +32,12 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$DIR/helpers/colors.sh"
 source "$DIR/helpers/formatters.sh"
 source "$DIR/helpers/welcome.sh"
+source "$DIR/helpers/php-args.sh"
+
+# Parse PHP runtime arguments first
+parse_php_args "$@"
+# Update positional parameters to remove PHP runtime args
+set -- "${php_filtered_args[@]}"
 
 # Where to stop looking for file paths in the argument list
 arg_lookup_start=1
@@ -55,11 +63,17 @@ do
     esac
 done
 
+# Build the PHP command with runtime args
+php_cmd="php"
+if [ -n "$php_runtime_args" ]; then
+    php_cmd="php $php_runtime_args"
+fi
+
 # Loop through the list of paths to run php lint against
 parse_error_count=0
 for path in "${@:$arg_lookup_start}"
 do
-    command_result="$($SHELL -c "(eval 'php -l \"${path}\"') 2>&1 ; exit \$?")"
+    command_result="$($SHELL -c "(eval '${php_cmd} -l \"${path}\"') 2>&1 ; exit \$?")"
     exitCode=$?
 
     if [ $exitCode != 0 ] ; then

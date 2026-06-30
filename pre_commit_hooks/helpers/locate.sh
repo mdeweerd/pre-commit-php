@@ -9,8 +9,16 @@
 # Final location of the executable that we found by searching
 exec_command=""
 
+# PHP runtime arguments (like -d memory_limit=512M) that should be passed to php
+# This is set by the php-args.sh helper
+php_runtime_args="${php_runtime_args:-}"
+
 # A phar file will need to be called by php
-prefixed_local_command="php $local_command"
+if [ -n "$php_runtime_args" ]; then
+    prefixed_local_command="php $php_runtime_args $local_command"
+else
+    prefixed_local_command="php $local_command"
+fi
 
 if [ -f "$vendor_command" ]; then
     exec_command=$vendor_command
