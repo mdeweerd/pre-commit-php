@@ -38,12 +38,12 @@ validate_memory_limit() {
     local value="$1"
     # Remove leading --memory_limit=
     value="${value#--memory_limit=}"
-    
+
     # Check if value matches pattern: digits followed by optional K/M/G (case insensitive)
     if [[ "$value" =~ ^[0-9]+[KMGkmg]?$ ]]; then
         return 0
     fi
-    
+
     return 1
 }
 
@@ -51,7 +51,7 @@ validate_memory_limit() {
 parse_php_args() {
     local i=1
     php_filtered_args=()
-    
+
     while [ $i -le $# ]; do
         local arg="${!i}"
         case "$arg" in
