@@ -12,7 +12,8 @@
 # - php
 #
 # Arguments
-# See: https://phpstan.org/user-guide/command-line-usage
+# - PHP runtime arguments (like -d memory_limit=512M) can be passed before other arguments
+# - See: https://phpstan.org/user-guide/command-line-usage
 #
 ################################################################################
 
@@ -29,7 +30,13 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$DIR/helpers/colors.sh"
 source "$DIR/helpers/formatters.sh"
 source "$DIR/helpers/welcome.sh"
+source "$DIR/helpers/php-args.sh"
 source "$DIR/helpers/locate.sh"
+
+# Parse PHP runtime arguments
+parse_php_args "$@"
+# Update positional parameters to remove PHP runtime args
+set -- "${php_filtered_args[@]}"
 
 echo -e "${bldwht}Running command ${txtgrn}${exec_command} analyze $(for i in "$@";do echo "'$i'";done)${txtrst}"
 hr

@@ -14,7 +14,8 @@
 # - php
 #
 # Arguments
-# - None
+# - PHP runtime arguments (like -d memory_limit=512M) can be passed before other arguments
+# - Any other arguments are passed to php-cs-fixer
 #
 ################################################################################
 
@@ -31,7 +32,13 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$DIR/helpers/colors.sh"
 source "$DIR/helpers/formatters.sh"
 source "$DIR/helpers/welcome.sh"
+source "$DIR/helpers/php-args.sh"
 source "$DIR/helpers/locate.sh"
+
+# Parse PHP runtime arguments
+parse_php_args "$@"
+# Update positional parameters to remove PHP runtime args
+set -- "${php_filtered_args[@]}"
 
 # Build our list of files, and our list of args by testing if the argument is
 # a valid path
