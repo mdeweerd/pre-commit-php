@@ -11,16 +11,16 @@ IGNORE_REGEX="(Sebastian|tests.in.|[tT]ime|q{30}|-{20}|^[\r]?$)"
 
 # Function to recursively search upwards for file
 _find_file() {
-    local dir="$1"
-    local file="$2"
-    while [ "${dir}" != "/" ]; do
-        if [ -f "${dir}/${file}" ]; then
-            echo "${dir}/${file}"
-            return 0
-        fi
-        dir=$(dirname "${dir}")
-    done
-    return 1
+  local dir="$1"
+  local file="$2"
+  while [ "${dir}" != "/" ]; do
+    if [ -f "${dir}/${file}" ]; then
+      echo "${dir}/${file}"
+      return 0
+    fi
+    dir=$(dirname "${dir}")
+  done
+  return 1
 }
 
 B_U=$(_find_file "$(dirname "$(realpath "$0")")" bash_unit)
@@ -30,7 +30,7 @@ BASH_UNIT="eval FORCE_COLOR=false \"$B_U\""
 TEST_DOC=$(_find_file "$(dirname "$(realpath "${BASH_SOURCE[0]}")")" ${TEST_DOC_BN})
 # shellcheck disable=2181 # Use 'if ! mycmd;'
 if [ $? != 0 ] ; then
-    TEST_DOC=$(_find_file "$(dirname "$(realpath "$0")")" ${TEST_DOC_BN})
+  TEST_DOC=$(_find_file "$(dirname "$(realpath "$0")")" ${TEST_DOC_BN})
 fi
 
 WORK_DIR=$(dirname "$(dirname "$(_find_file "$(dirname "$(realpath "${BASH_SOURCE[0]}")")" pre_commit_hooks/php-lint.sh)")")/tests
@@ -38,21 +38,21 @@ WORK_DIR=$(dirname "$(dirname "$(_find_file "$(dirname "$(realpath "${BASH_SOURC
 export STICK_TO_CWD=true
 
 prepare_tests() {
-    TMP_DIR=/tmp/$$
-    mkdir ${TMP_DIR}
-    local block=0
-    local remaining=${TMP_DIR}/remaining
-    local swap=${TMP_DIR}/swap
-    local test_output=${TMP_DIR}/test_output
-    local expected_output=${TMP_DIR}/expected_output
-    cp "$TEST_DOC" "$remaining"
+  TMP_DIR=/tmp/$$
+  mkdir ${TMP_DIR}
+  local block=0
+  local remaining=${TMP_DIR}/remaining
+  local swap=${TMP_DIR}/swap
+  local test_output=${TMP_DIR}/test_output
+  local expected_output=${TMP_DIR}/expected_output
+  cp "$TEST_DOC" "$remaining"
 
-    while grep -E "^${TEST_PATTERN}$" "$remaining" >/dev/null
-    do
-        ((++block))
-        cd "${WORK_DIR}" || exit 1
-        #run_doc_test  "$remaining" "$swap"
-        local bs="\\" # beautysh workaround
+  while grep -E "^${TEST_PATTERN}$" "$remaining" >/dev/null
+  do
+    ((++block))
+    cd "${WORK_DIR}" || exit 1
+    #run_doc_test  "$remaining" "$swap"
+    local bs="\\" # beautysh workaround
         run_doc_test  "$remaining" "$swap" \
             |& grep -avP "${IGNORE_REGEX}" \
             | sed -e 's/\r$//' -e "\$a$bs" \

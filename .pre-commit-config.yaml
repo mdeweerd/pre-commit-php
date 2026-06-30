@@ -25,7 +25,8 @@ repos:
     rev: v6.4.3
     hooks:
       - id: beautysh
-        additional_dependencies: [setuptools]
+        exclude: ^tests/test_doc.sh$
+        # additional_dependencies: [setuptools]
 
   # Prettier (format code, only for non common files)
   - repo: https://github.com/pre-commit/mirrors-prettier
