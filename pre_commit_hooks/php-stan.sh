@@ -31,7 +31,7 @@ source "$DIR/helpers/formatters.sh"
 source "$DIR/helpers/welcome.sh"
 source "$DIR/helpers/locate.sh"
 
-echo -e "${bldwht}Running command ${txtgrn}${exec_command} analyze $(for i in "$@";do echo "'$i'";done)${txtrst}"
+echo -e "${bldwht}Running command ${txtgrn}${exec_command} analyze$(for i in "$@";do echo " '$i'";done)${txtrst}"
 hr
 
 command_result="$($SHELL -c "(cd '$PWD' ; eval '\"${exec_command}\" analyse --no-progress \"\${@}\"' ) 2>&1 ; exit \$?" -- "$@")"
