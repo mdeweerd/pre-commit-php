@@ -1,0 +1,13 @@
+name: Monthly or Manual Update Check
+
+on:
+  schedule:
+    - cron: '0 0 1 * *'  # Runs at 00:00 on the 1st of every month
+  workflow_dispatch:     # Allows manual trigger
+
+jobs:
+  dependabot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: gh api repos/${{ github.repository }}/dependabot/alerts --method GET
