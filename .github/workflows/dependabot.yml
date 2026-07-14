@@ -1,14 +1,8 @@
-name: Monthly or Manual Update Check
+version: 2
+updates:
 
-on:
-  schedule:
-    - cron: '0 0 1 * *'  # Runs at 00:00 on the 1st of every month
-  workflow_dispatch:
-
-jobs:
-  check-updates:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: |
-          GH_TOKEN=${{ github.token }} gh api repos/${{ github.repository }}/dependabot/alerts
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    workflow_dispatch:
