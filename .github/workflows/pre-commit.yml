@@ -16,7 +16,7 @@ jobs:
         with:
           php-version: 8.1
           coverage: none # disable xdebug, pcov
-          tools: phpcs,phpcbf,phpunit,phpstan,php-cs-fixer,phplint
+          tools: phpcs=3.13.5,phpcbf,phpunit,phpstan,php-cs-fixer,phplint
       # Action setup-python needs a requirements.txt or pyproject.toml
       # This ensures one of them exists.
       - name: Create requirements.txt if no requirements.txt or pyproject.toml
