@@ -5,4 +5,5 @@ if [ ! -r ./bash_unit ] ; then
     bash <(curl -s https://raw.githubusercontent.com/pgrange/bash_unit/master/install.sh)
 fi
 
+set -x
 ./bash_unit "$@" tests/test_*.sh
