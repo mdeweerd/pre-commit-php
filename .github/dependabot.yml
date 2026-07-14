@@ -9,12 +9,12 @@ multi-ecosystem-groups:
 updates:
   - package-ecosystem: "pre-commit"
     directory: "/"
-    patterns: []
+    patterns: ["*"]
     #patterns: ["nginx", "redis", "postgres"]
     multi-ecosystem-group: "infrastructure"
 
   - package-ecosystem: "github-actions"
     directory: "/"
-    patterns: []
+    patterns: ["*"]
     #patterns: ["aws", "terraform-*"]
     multi-ecosystem-group: "infrastructure"
