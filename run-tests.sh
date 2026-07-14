@@ -7,4 +7,5 @@ fi
 
 ./bash_unit "$@" tests/test_*.sh && failure=$?
 echo "Exit code $failure"
+git diff
 exit "$failure"
